@@ -7,15 +7,10 @@ CREATE TABLE UniversitySchema.StudyPlanDimension(
     Branch TEXT
 );
 
-CREATE TABLE UniversitySchema.UniversityDimension(
-    UniversityKey TEXT PRIMARY KEY,
-    UniversityName TEXT
-);
-
 CREATE TABLE IF NOT EXISTS UniversitySchema.DepartmentDimension(
     DepartmentKey TEXT PRIMARY KEY,
     DepartmentName TEXT,
-    UniversityKey TEXT REFERENCES UniversitySchema.UniversityDimension
+    UniversityName TEXT
 );
 
 CREATE TABLE IF NOT EXISTS UniversitySchema.CourseDimension(
@@ -40,48 +35,40 @@ CREATE TABLE IF NOT EXISTS UniversitySchema.StudentDimension(
     Name TEXT
 );
 
-CREATE TABLE IF NOT EXISTS UniversitySchema.DayDimension(
-    DayKey TEXT PRIMARY KEY,
-    Day TEXT
-);
-
-CREATE TABLE IF NOT EXISTS UniversitySchema.MonthDimension(
-    MonthKey TEXT PRIMARY KEY,
-    Month TEXT
-);
-
-CREATE TABLE IF NOT EXISTS UniversitySchema.SemesterDimension(
-    SemesterKey TEXT PRIMARY KEY,
-    Semester TEXT
-);
-
-CREATE TABLE IF NOT EXISTS UniversitySchema.YearDimension(
-    YearKey TEXT PRIMARY KEY,
-    Year TEXT
-);
 
 CREATE TABLE IF NOT EXISTS UniversitySchema.TimeDimension(
     TimeKey TEXT PRIMARY KEY,
-    DayKey TEXT REFERENCES UniversitySchema.DayDimension,
-    MonthKey TEXT REFERENCES UniversitySchema.MonthDimension,
-    SemesterKey TEXT REFERENCES UniversitySchema.SemesterDimension,
-    YearKey TEXT REFERENCES UniversitySchema.YearDimension
+    Day TEXT,
+    Month TEXT,
+    Semester TEXT,
+    Year TEXT
 );
 
 CREATE TABLE IF NOT EXISTS UniversitySchema.FactGrades (
-    Greade TEXT,
-    StudyPlanKey TEXT REFERENCES UniversitySchema.StudyPlanDimension,
+    MatNumberKey TEXT PRIMARY KEY,
+    Grade TEXT,
     LecturerKey TEXT REFERENCES UniversitySchema.LecturerDimension,
     CourseKey TEXT REFERENCES UniversitySchema.CourseDimension,
     TimeKey TEXT REFERENCES UniversitySchema.TimeDimension,
     StudentKey TEXT REFERENCES UniversitySchema.StudentDimension,
-    StudentPlanKey TEXT REFERENCES UniversitySchema.StudyPlanDimension
+    StudyPlanKey TEXT REFERENCES UniversitySchema.StudyPlanDimension
 );
 
 
 
--- DROP TABLE IF EXISTS UniversitySchema.studyplandimension;
--- DROP TABLE IF EXISTS UniversitySchema.UniversityDimension;
+DROP TABLE IF EXISTS UniversitySchema.studyplandimension;
+DROP TABLE IF EXISTS UniversitySchema.UniversityDimension;
+DROP TABLE IF EXISTS UniversitySchema.departmentdimension;
+DROP TABLE IF EXISTS UniversitySchem.coursedimension
+DROP TABLE IF EXISTS UniversitySchema.lecturerdimension;
+DROP TABLE IF EXISTS UniversitySchema.StudentDimension;
+DROP TABLE IF EXISTS UniversitySchema.DayDimension;
+DROP TABLE IF EXISTS UniversitySchema.Monthimension;
+DROP TABLE IF EXISTS UniversitySchema.SemesterDimension;
+DROP TABLE IF EXISTS UniversitySchema.yeardimension;
+DROP TABLE IF EXISTS UniversitySchema.timedimension;
+DROP TABLE IF EXISTS UniversitySchem.FactGrades
+-- DROP TABLE IF EXISTS UniversitySchema.FactGrades;
 -- DROP SCHEMA IF EXISTS UniversitySchema;
 
 -- retrieve schemas names
@@ -92,5 +79,30 @@ CREATE TABLE IF NOT EXISTS UniversitySchema.FactGrades (
 -- FROM information_schema.tables
 -- WHERE table_schema = 'universityschema';
 
-DELETE FROM UniversitySchema.UniversityDimension;
 DELETE FROM UniversitySchema.StudyPlanDimension;
+DELETE FROM UniversitySchema.DepartmentDimension;
+DELETE FROM UniversitySchema.CourseDimension;
+DELETE FROM UniversitySchema.LecturerDimension;
+
+DELETE FROM UniversitySchema.TimeDimension;
+DELETE FROM UniversitySchema.StudentDimension;
+DELETE FROM UniversitySchema.StudyPlanDimension;
+-- CREATE TABLE IF NOT EXISTS UniversitySchema.DayDimension(
+--     DayKey TEXT PRIMARY KEY,
+--     Day TEXT
+-- );
+
+-- CREATE TABLE IF NOT EXISTS UniversitySchema.MonthDimension(
+--     MonthKey TEXT PRIMARY KEY,
+--     Month TEXT
+-- );
+
+-- CREATE TABLE IF NOT EXISTS UniversitySchema.SemesterDimension(
+--     SemesterKey TEXT PRIMARY KEY,
+--     Semester TEXT
+-- );
+
+-- CREATE TABLE IF NOT EXISTS UniversitySchema.YearDimension(
+--     YearKey TEXT PRIMARY KEY,
+--     Year TEXT
+-- );
